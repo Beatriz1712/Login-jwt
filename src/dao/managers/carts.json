@@ -1,0 +1,10 @@
+{
+  "name": "carrito prueba",
+  "description": "descripcion prueba",
+  "products": [
+    {
+      "productId": "652b1b0374511c27a2fd7481",
+      "quantity": "2"
+    }
+  ]
+}

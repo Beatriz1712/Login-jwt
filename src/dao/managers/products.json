@@ -1,0 +1,8 @@
+{
+  "name": "Juguete",
+  "description": "Juguete",
+  "price": 26000,
+  "category": "Juguetes",
+  "stock": 45,
+  "thumbnail": "https://laikapp.s3.amazonaws.com/images_products/700603673327.jpg"
+}

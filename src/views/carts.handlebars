@@ -1,0 +1,9 @@
+{{#if cart}}
+  {{#each cart}}
+    <p>Id: {{this.productId}} - Cantidad: {{this.quantity}} Uds</p>
+  {{/each}}
+{{else}}
+  <p>El carrito está vacío.</p>
+{{/if}}
+
+<link rel="stylesheet" type="text/css" href="/css/style.css" />

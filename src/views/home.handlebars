@@ -1,0 +1,16 @@
+<h1>Lista de productos</h1>
+<h2>Bienvenido {{user.email}}</h2>
+<p>Rol: {{user.role}}</>
+<p>Nombre: {{user.name}}</>
+<p>Apellido: {{user.surname}}</p>
+{{#each products}}
+  <div class="divProducto">
+    <h2>{{this.name}}</h2>
+    <p>{{this._id}}</p>
+    <p> {{this.description}} </p>
+    <p> {{this.price}} </p>
+    <p> {{this.category}} </p>
+    <p> {{this.stock}} </p>
+    <img src="{{this.thumbnail}}" alt="" />
+  </div>
+{{/each}}
