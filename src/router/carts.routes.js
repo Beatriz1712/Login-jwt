@@ -8,7 +8,9 @@ const carts = new CartManager();
 router.get("/", async (req, res) => {
   try {
     let carts = await cartModel.find();
-    res.send({ result: "success", payload: carts });
+    res.send({ 
+      result: "success",
+      payload: carts });
   } catch (error) {
     console.log("Cannot get carts with mongoose: ", error);
   }
@@ -36,14 +38,18 @@ router.post("/", async (req, res) => {
   let { name, description, products } = req.body;
 
   if (!name || !description || !products) {
-    return res.send({ status: "error", error: "Incomplete values" });
+    return res.send({ 
+      status: "error", 
+      error: "Incomplete values" });
   }
   let result = await cartModel.create({
     name,
     description,
     products,
   });
-  res.send({ result: "success", payload: result });
+  res.send({ 
+    result: "success",
+   payload: result });
 });
 
 //Actualiza carrito
@@ -55,7 +61,9 @@ router.put("/:cid", async (req, res) => {
     !cartToReplace.description ||
     !cartToReplace.products
   ) {
-    return res.send({ status: "error", error: "Incomplete values" });
+    return res.send({ 
+      status: "error", 
+      error: "Incomplete values" });
   }
   let result = await cartModel.updateOne({ _id: cid }, cartToReplace);
   res.send({ result: "success", payload: result });

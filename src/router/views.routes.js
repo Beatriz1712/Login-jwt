@@ -18,8 +18,8 @@ ViewsRouter.get("/products", async (req, res) => {
   let allProducts = await product.getProducts();
   allProducts = allProducts.map((product) => product.toJSON());
   const userData = {
-    name: req.session.name,
-    surname: req.session.surname,
+    first_name: req.session.first_name,
+    last_name: req.session.last_name,
     email: req.session.email,
     role: req.session.role,
   };

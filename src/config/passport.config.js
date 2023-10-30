@@ -22,8 +22,8 @@ const initializePassport = () => {
           const hashedPassword = await createHash(password);
 
           const newUser = {
-            name,
-            surname,
+            first_name,
+            last_name,
             email,
             password: hashedPassword,
             role,
@@ -89,8 +89,8 @@ const initializePassport = () => {
 
             if (!user) {
               let newUser = {
-                name: profile._json.name,
-                surname: "",
+                first_name: profile._json.name,
+                last_name: "",
                 email: email,
                 password: "",
                 role: "admin",

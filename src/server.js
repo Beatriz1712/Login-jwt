@@ -31,6 +31,7 @@ const fileStorage = FileStore(session);
 
 //Conexión a MongoDB:
 mongoose;
+mongoose.set("strictQuery", false);
 mongoose
   .connect(
     "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0bzy.mongodb.net/test"
