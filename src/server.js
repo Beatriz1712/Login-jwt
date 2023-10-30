@@ -1,6 +1,6 @@
 import express from "express";
 import { engine } from "express-handlebars";
-import * as path from "path"
+import * as path from "path";
 import __dirname from "./utils.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -11,7 +11,6 @@ import passport from "passport";
 import { createHash, isValidPassword } from "./utils.js";
 import initializePassport from "./config/passport.config.js";
 
-
 //Mongoose
 import mongoose from "mongoose";
 
@@ -21,28 +20,27 @@ import cartsRouter from "./router/carts.routes.js";
 import productsRouter from "./router/products.routes.js";
 import UserRouter from "./router/user.routes.js";
 
-
 //Creación de la aplicación Express y servidor HTTP:
-const app = express()
+const app = express();
 const PORT = 8080;
-app.listen(PORT, () =>{
- console.log(chalk.bgYellowBright.black.bold(`Escuchando en puerto: ${PORT}`));   
-} )
+app.listen(PORT, () => {
+  console.log(chalk.bgYellowBright.black.bold(`Escuchando en puerto: ${PORT}`));
+});
 
 const fileStorage = FileStore(session);
 
 //Conexión a MongoDB:
+mongoose;
 mongoose
-mongoose.connect(
-  "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0bzy.mongodb.net/test",
-  (error) => {
-    if (error) {
-      console.log("Error connecting to database: ", error);
-      process.exit();
-    }
-    console.log("Connected to database");
-  }
-);
+  .connect(
+    "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0bzy.mongodb.net/test"
+  )
+  .then(() => {
+    console.log("\u001b[1;36mConectada a la base de datos");
+  })
+  .catch((error) =>
+    console.error("\u001b[1;36mError al conectar a la base de datos", error)
+  );
 
 //Configuración de sesión:
 app.use(
@@ -59,34 +57,26 @@ app.use(
 );
 
 //Configuración de passport:
-initializePassport()
-app.use(passport.initialize())
-app.use(passport.session())
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Middlewares
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Estructura handlebars
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views", path.resolve(__dirname + "/views"))
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", path.resolve(__dirname + "/views"));
 
 //Configuración de rutas estáticas y de vistas:
-app.use("/", express.static(__dirname + "/public"))
+app.use("/", express.static(__dirname + "/public"));
 
 //Rutas para vistas:
-app.use("/", ViewsRouter)
+app.use("/", ViewsRouter);
 
 //Rutas para CRUD:
-app.use("/api/carts", cartsRouter)
-app.use("/api/products", productsRouter)
-app.use("/api/users", UserRouter)
-
-
-
-
-
-
-
-
+app.use("/api/carts", cartsRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/users", UserRouter);
