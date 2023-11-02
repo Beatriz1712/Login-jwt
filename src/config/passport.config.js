@@ -13,25 +13,29 @@ const initializePassport = () => {
     new LocalStrategy(
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
-        const { name, surname, email, role } = req.body;
+        
         try {
-          let user = await userManager.findEmail({ email: username });
-          if (user) {
-            return done(null, false, { message: "User already exists" });
-          }
+          const { name, surname, email, role } = req.body;
           const hashedPassword = await createHash(password);
-
+          let user = await userManager.findUser(email);
+        
           const newUser = {
-            first_name,
-            last_name,
+            first_name: name,
+            last_name:surname,
             email,
             password: hashedPassword,
             role,
           };
-          let result = await userManager.addUser(newUser);
+         if (user){
+            return done(null, false, {message: `User already exists`});
+          }
+          console.log(newUser)
+          let result = await UserModel.create(newUser);
+          console.log(result);
           return done(null, result);
-        } catch (error) {
-          return done("Error getting the user", error);
+        }
+        catch (error) {
+        return done("Error getting the user", error);
         }
       }
     )
@@ -41,12 +45,9 @@ const initializePassport = () => {
     done(null, user._id);
   });
   passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await userManager.getUserById(id);
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
+    const user = await userManager.getUserById(id);
+     done(null, user);
+    
   });
 
   passport.use(

@@ -15,10 +15,10 @@ import initializePassport from "./config/passport.config.js";
 import mongoose from "mongoose";
 
 //Rutas
-import ViewsRouter from "./router/views.routes.js";
-import cartsRouter from "./router/carts.routes.js";
-import productsRouter from "./router/products.routes.js";
-import UserRouter from "./router/user.routes.js";
+import ViewsRouter from "./routes/views.routes.js";
+import cartsRouter from "./routes/carts.routes.js";
+import productsRouter from "./routes/products.routes.js";
+import UserRouter from "./routes/user.routes.js";
 
 //Creación de la aplicación Express y servidor HTTP:
 const app = express();

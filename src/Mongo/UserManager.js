@@ -8,6 +8,7 @@ class UserManager extends UserModel {
     addUser = async (user) => {
         try {
             const newUser = await UserModel.create(user);
+            console.log(newUser)
             return newUser;
         } catch (error) {
             console.log("Error al agregar usuario: ");

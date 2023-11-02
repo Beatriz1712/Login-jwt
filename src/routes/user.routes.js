@@ -10,8 +10,11 @@ UserRouter.post(
   passport.authenticate("register", { failureRedirect: "/failregister" }),
   async (req, res) => {
     try {
-      const { first_name, last_name, email, password, role } = req.body;
-      console.log(first_name + last_name + email + password + role);
+      console.log(`Register Strategy`, req.body)
+      const { name, surname, email, password, role } = req.body;
+      const first_name= name;
+      const last_name= surname;
+      
       if (!first_name || !last_name || !email || !password || !role) {
         res.status(400).send("Faltan datos");
       }
@@ -27,6 +30,9 @@ UserRouter.get("/failregister", async (req, res) => {
   res.send({ error: "Failed" });
 });
 
+UserRouter.get("/login", async (req, res) => {
+  res.render("login");
+})
 UserRouter.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/faillogin" }),
