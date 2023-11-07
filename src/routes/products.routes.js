@@ -25,23 +25,23 @@ router.get("/", async (req, res) => {
 
 router.get("/:pid", async (req, res) => {
   try {
-    const prodId = req.params.pid;
-    const productDetails = await products.getProductById(prodId);
+    const pid = req.params.pid;
+    const productDetails = await products.getProductById(pid);
     res.send({ product: productDetails });
   } catch (error) {
     console.error("Error al obtener el producto:", error);
-    res.status(500).json({ error: "Error al obtener el producto 2" });
+    res.status(500).json({ error: "Error al obtener el producto " });
   }
 });
 
 router.post("/", async (req, res) => {
-  let { name, description, price, category, stock, thumbnail } = req.body;
+  let { title, description, price, category, stock, thumbnail } = req.body;
 
-  if (!name || !description || !price || !category || !stock || !thumbnail) {
+  if (!title || !description || !price || !category || !stock || !thumbnail) {
     return res.send({ status: "error", error: "Incomplete values" });
   }
   let result = await productModel.create({
-    name,
+    title,
     description,
     price,
     category,
@@ -55,7 +55,7 @@ router.put("/:pid", async (req, res) => {
   let { pid } = req.params;
   let productToReplace = req.body;
   if (
-    !productToReplace.name ||
+    !productToReplace.title ||
     !productToReplace.description ||
     !productToReplace.price ||
     !productToReplace.category ||

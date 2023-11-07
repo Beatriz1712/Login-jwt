@@ -6,7 +6,6 @@ import UserManager from "../Mongo/UserManager.js";
 const ViewsRouter = express.Router();
 const product = new ProductManager();
 const cart = new cartModel();
-const user = new UserManager();
 
 //Rutas GET para la página de inicio y detalles del producto:
 
@@ -25,15 +24,15 @@ ViewsRouter.get("/products", async (req, res) => {
   };
 
   res.render("home", {
-    title: "login-jwt",
+    title: "login-passport-github",
     products: allProducts,
     user: userData,
   });
 });
 
-ViewsRouter.get("/products/:id", async (req, res) => {
-  let productId = req.params.id;
-  let prod = await product.getProductById(productId);
+ViewsRouter.get("/products/:pid", async (req, res) => {
+  let { pid } = req.params.pid;
+  let prod = await product.getProductById(pid);
 
   const productDetail = prod.toObject();
 
@@ -44,8 +43,8 @@ ViewsRouter.get("/products/:id", async (req, res) => {
 });
 
 ViewsRouter.get("/carts/:cid", async (req, res) => {
-  let cartId = req.params.cid;
-  let products = await cart.getProductsInCart(cartId);
+  let cid = req.params.cid;
+  let products = await cart.getProductsInCart(cid);
   let productObjet = products.toObject();
   res.render("carts", {
     title: "Carrito",

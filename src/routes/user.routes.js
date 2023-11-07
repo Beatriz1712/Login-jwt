@@ -3,7 +3,7 @@ import { Router } from "express";
 import passport from "passport";
 
 const UserRouter = Router();
-const user = new UserManager();
+//const user = new UserManager();
 
 UserRouter.post(
   "/register",
@@ -11,10 +11,8 @@ UserRouter.post(
   async (req, res) => {
     try {
       console.log(`Register Strategy`, req.body)
-      const { name, surname, email, password, role } = req.body;
-      const first_name= name;
-      const last_name= surname;
-      
+      const { first_name, last_name, email, password, role } = req.body;
+
       if (!first_name || !last_name || !email || !password || !role) {
         res.status(400).send("Faltan datos");
       }

@@ -22,3 +22,18 @@ img {
 #realTimeProducts {
   min-width: 80vw;
 }
+.btn-addCart{
+  padding: 10px 20px;
+  background-color: rgb(237, 244, 245);
+  color: rgb(146, 11, 101);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+.btn-addCart:hover{
+background-color:rgb(14, 232, 69);
+}
+.btn-addCart:active{
+background-color:rgb(237, 244, 245);
+}

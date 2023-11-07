@@ -1,6 +1,6 @@
 import { UserModel } from "../dao/models/user.model.js";
 
-class UserManager extends UserModel {
+class UserManagerd extends UserModel {
     constructor() {
         super();
     }
@@ -38,7 +38,7 @@ class UserManager extends UserModel {
 
     getUserByEmail = async (email) => {
         try {
-            const user = await UserModel.findOne({ email: email });
+            const user = await UserModel.find({ email: email });
             return user;
         } catch (error) {
             console.log("Error al obtener usuario por email: ");
@@ -78,7 +78,7 @@ class UserManager extends UserModel {
 
     findUser = async (email) => {
         try {
-            const user = await UserModel.findOne({ email }, { email: 1, password: 1, role: 1, name: 1, surname: 1 });
+            const user = await UserModel.findOne({ email: email });
             if (!user) {
                 return "User not found";
             }
@@ -100,5 +100,5 @@ class UserManager extends UserModel {
     }
 
 }
-
+const UserManager = new UserManagerd
 export default UserManager;

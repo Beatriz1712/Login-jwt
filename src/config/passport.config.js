@@ -6,36 +6,37 @@ import UserManager from "../Mongo/UserManager.js";
 import { UserModel } from "../dao/models/user.model.js";
 
 const LocalStrategy = local.Strategy;
-const userManager = new UserManager();
 const initializePassport = () => {
   passport.use(
     "register",
     new LocalStrategy(
-      { passReqToCallback: true, usernameField: "email" },
-      async (req, username, password, done) => {
-        
+      { usernameField: "email", passReqToCallback: true },
+      async (req, email, password, done) => {
         try {
-          const { name, surname, email, role } = req.body;
-          const hashedPassword = await createHash(password);
-          let user = await userManager.findUser(email);
-        
+          const { first_name, last_name, role } = req.body;
+          //const hashedPassword = await createHash(password);
+          let userExists = await UserManager.getUserByEmail(email);
+          console.log('User exists:', userExists);
+          if(!(Object.keys(userExists).length === 0))
+          return done(null, false, {message: 'User already exists'});
+          console.log('hola');
+          const hashedPassword = createHash(password);
+          console.log(hashedPassword);
+
           const newUser = {
-            first_name: name,
-            last_name:surname,
+            first_name,
+            last_name,
             email,
             password: hashedPassword,
             role,
           };
-         if (user){
-            return done(null, false, {message: `User already exists`});
-          }
-          console.log(newUser)
-          let result = await UserModel.create(newUser);
-          console.log(result);
+          
+          console.log(newUser);
+          let result = await UserManager.addUser(newUser);
+          console.log('Usuario creado', result);
           return done(null, result);
-        }
-        catch (error) {
-        return done("Error getting the user", error);
+        } catch (error) {
+          return done("Error getting the user", error);
         }
       }
     )
@@ -45,7 +46,7 @@ const initializePassport = () => {
     done(null, user._id);
   });
   passport.deserializeUser(async (id, done) => {
-    const user = await userManager.getUserById(id);
+    const user = await UserManager.getUserById(id);
      done(null, user);
     
   });
@@ -56,7 +57,7 @@ const initializePassport = () => {
       { usernameField: "email" },
       async (username, password, done) => {
         try {
-          const user = await userManager.findEmail({ email: username });
+          const user = await UserManager.findEmail({ email: username });
           console.log(`User del login: ${user}`);
           if (!user) {
             return done(null, false, { message: "User not found" });
@@ -85,7 +86,7 @@ const initializePassport = () => {
         try {
           if (profile.email && profile.email.length > 0) {
             const email = profile.email[0].value;
-            let user = await userManager.findOne({ email: email });
+            let user = await UserManager.findOne({ email: email });
             console.log(`User en passport use github: ${user}`);
 
             if (!user) {
@@ -96,7 +97,7 @@ const initializePassport = () => {
                 password: "",
                 role: "admin",
               };
-              let result = await userManager.create(newUser);
+              let result = await UserManager.create(newUser);
               return done(null, result);
             } else {
               return done(null, user);
