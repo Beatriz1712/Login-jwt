@@ -36,7 +36,7 @@ const initializePassport = () => {
           console.log('Usuario creado', result);
           return done(null, result);
         } catch (error) {
-          return done("Error getting the user", error);
+          return done(error);
         }
       }
     )
@@ -84,20 +84,27 @@ const initializePassport = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          if (profile.email && profile.email.length > 0) {
-            const email = profile.email[0].value;
-            let user = await UserManager.findOne({ email: email });
+          let profileJson = JSON.stringify(profile);
+          if(profile && profile.emails && profile.emails.length >0){
+          const email = profile.emails[0].value;
+          let name = profile.displayName;
+          if (email && email.length > 0) {
+           
+            let user = await UserManager.findEmail({ email: email });
             console.log(`User en passport use github: ${user}`);
 
             if (!user) {
+              console.log('estoy creando el user de github');
               let newUser = {
-                first_name: profile._json.name,
-                last_name: "",
+                name: name,
                 email: email,
                 password: "",
                 role: "admin",
               };
-              let result = await UserManager.create(newUser);
+              console.log(`newUser en passport.use/github: ${newUser}`);
+              let newUserJson = JSON.stringify(newUser)
+              console.log(`newUser en passport.use/github en Json: ${newUserJson}`);
+              let result = await UserManager.addUser(newUser);
               return done(null, result);
             } else {
               return done(null, user);
@@ -105,6 +112,7 @@ const initializePassport = () => {
           } else {
             return done(null, false, { message: "User not found in GitHub" });
           }
+        }
         } catch (error) {
           return done(error);
         }
