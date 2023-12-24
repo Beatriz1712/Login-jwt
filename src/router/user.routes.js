@@ -7,10 +7,10 @@ const user = new UserManager()
 
 UserRouter.post("/register", passport.authenticate("register", { failureRedirect: "/failregister" }), async (req, res) => {
     try {
-        const { name, surname, email, password, role } = req.body
-        console.log(name + surname + email + password + role);
-        if (!name || !surname || !email || !password || !role) {
-            res.status(400).send("Faltan datos")
+        const { first_name, last_name, email, password, role } = req.body
+        console.log(first_name + last_name + email + password + role);
+        if (!first_name || !last_name || !email || !password || !role) {
+          res.status(400).send("Faltan datos");
         }
         res.redirect("/login")
     } catch (error) {
@@ -33,15 +33,15 @@ UserRouter.post("/login", passport.authenticate("login", { failureRedirect: "/fa
         if (user.role === "admin") {
             req.session.email = user.email
             req.session.role = user.role
-            req.session.name = user.name
-            req.session.surname = user.surname
+            req.session.first_name = user.first_name;
+            req.session.last_name = user.last_name;
             res.redirect("/profile")
 
         } else {
             req.session.email = user.email
             req.session.role = user.role
-            req.session.name = user.name
-            req.session.surname = user.surname
+            req.session.first_name = user.first_name;
+            req.session.last_name = user.last_name;
             res.redirect("/products")
         }
 

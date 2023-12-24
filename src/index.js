@@ -36,6 +36,7 @@ mongoose.connect( "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0
         console.log("Error connecting to database: ", error);
         process.exit();
     }
+    
     console.log("Connected to database");
 })
 

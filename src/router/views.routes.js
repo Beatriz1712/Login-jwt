@@ -73,7 +73,7 @@ ViewsRouter.get("/profile", async (req, res) => {
     let email = user.email
     console.log(`el usuario de la session /profile: ${userJson}`);
     console.log(`el email de la session /profile: ${email}`);
-    if (!email) {
+    if (!user || !user.email) {
         res.redirect("/login")
         console.log("entre en el if de /profile")
     }

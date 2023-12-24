@@ -77,7 +77,7 @@ class UserManager extends UserModel {
 
     findUser = async (email) => {
         try {
-            const user = await UserModel.findOne({ email }, { email: 1, password: 1, role: 1, name: 1, surname: 1 });
+            const user = await UserModel.findOne({ email }, { email: 1, password: 1, role: 1, first_name: 1, last_name: 1 });
             if (!user) {
                 return "User not found";
             }

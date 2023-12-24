@@ -11,7 +11,7 @@ const initializePassport = () => {
     passport.use("register", new LocalStrategy(
         { passReqToCallback: true, usernameField: "email" },
         async (req, username, password, done) => {
-            const { name, surname, email, role } = req.body;
+            const { first_name, last_name, email, role } = req.body;
             try {
                 let user = await userManager.findEmail({ email: username });
                 if (user) {
@@ -19,7 +19,7 @@ const initializePassport = () => {
                 }
                 const hashedPassword = await createHash(password);
 
-                const newUser = { name, surname, email, password: hashedPassword, role };
+                const newUser = { first_name, last_name, email, password: hashedPassword, role };
                 let result = await userManager.addUser(newUser);
                 return done(null, result);
             } catch (error) {
@@ -83,7 +83,7 @@ const initializePassport = () => {
                     console.log("estoy creando el user de github");
 
                     let newUser = {
-                        name: name,
+                        first_name: first_name,
                         email: email,
                         password: "",
                         role: "admin"
