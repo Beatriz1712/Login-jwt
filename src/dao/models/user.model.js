@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 const userCollection = "users";
 
 const UserSchema = new mongoose.Schema({
-    first_name: { type: String, required: true, max: 100 },
-    last_name: { type: String, required: true, max: 100 },
+    name: { type: String, required: true, max: 100 },
+    surname: { type: String, required: false, max: 100 },
     email: { type: String, required: true, max: 100 },
-    password: { type: String, required: true, max: 100 },
+    password: { type: String, required: false, max: 100 },
     role: { type: String, required: true, max: 100 }
 })
 

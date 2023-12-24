@@ -1,19 +1,16 @@
-
-<h1>Bienvenido {{user.first_name}}</h1>
-<p>Nombre: {{user.first_name}}</p>
-<p>Apellido: {{user.last_name}}</p>
-<p>Rol: {{user.role}}</p>
-<h1>LISTA DE PRODUCTOS</h1>
+<h1>Lista de productos</h1>
+<h2>Bienvenido {{user.email}}</h2>
+<p>Rol: {{user.role}}</>
+<p>Nombre: {{user.name}}</>
+<p>Apellido: {{user.surname}}</p>
 {{#each products}}
   <div class="divProducto">
-    <h2>{{this.title}}</h2>
-    <p> Id: {{this._id}}</p>
-    <p> Descripcion: {{this.description}} </p>
-    <p> Precio: {{this.price}} </p>
-    <p> Categoria: {{this.category}} </p>
-    <p> Stock: {{this.stock}} </p>
-    <img src= "{{this.thumbnail}}" alt="" />
-    <button class="btn-addCart" data-product-id="{{this._id}}">Agregar al carrito</button>
-    <a href="/product/{{this._id}}">Ver detalles</a>
+    <h2>{{this.name}}</h2>
+    <p>{{this._id}}</p>
+    <p> {{this.description}} </p>
+    <p> {{this.price}} </p>
+    <p> {{this.category}} </p>
+    <p> {{this.stock}} </p>
+    <img src="{{this.thumbnail}}" alt="" />
   </div>
 {{/each}}
